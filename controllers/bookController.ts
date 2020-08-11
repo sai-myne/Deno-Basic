@@ -1,6 +1,6 @@
 import { Context } from "https://deno.land/x/abc@v1/mod.ts";
 import { Book } from '../models/bookModel.ts';
-import { Book } from '../models/bookModel.ts';
+import { v4 } from "https://deno.land/std/uuid/mod.ts";
 
 let books: Book[] = [
     { id: '1', title: 'name of the wind', author: 'patrick rothfuss', pages: 500 },
@@ -27,7 +27,7 @@ export const create_book = async (ctx: Context) => {
 
     // validate data & types of the data
     const id = v4.generate();
-    const book = { id, title, pages };
+    const book = { id, title, author, pages };
     books.push(book);
 
     return ctx.json(book, 201);
