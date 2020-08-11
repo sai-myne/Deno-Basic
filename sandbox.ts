@@ -1,26 +1,36 @@
-// reading files
+// // uuid module
+// import { v4 } from 'https://deno.land/std/uuid/mod.ts';
 
-// const decoder = new TextDecoder('utf-8');
+// const uid = v4.generate();
+// console.log(uid);
 
-// const data = await Deno.readFile('readme.txt');
-// console.log(decoder.decode(data));
+// // fs module
+// import { readJson, writeJson } from 'https://deno.land/std/fs/mod.ts';
 
-// const data = await Deno.readTextFile('readme.txt');
-// console.log(data);
+// const jsonObj = await readJson('ninjas.json');
+// console.log(jsonObj);
 
-// writing files
+// const books = [
+//     {
+//         "title": "the way of kings",
+//         "author": "brandon sanderson"
+//     },
+//     {
+//         "title": "name of the wind",
+//         "author": "patrick rothfuss"
+//     }
+// ]
 
-// const encoder = new TextEncoder();
-// const text = encoder.encode('hello, again, ninjas');
+// await writeJson('books.json', books, { spaces: 2 });
+// console.log('created books.json');
 
-// await Deno.writeFile('readme.txt', text);
+// http module (server)
+import { serve } from 'https://deno.land/std/http/server.ts';
 
-// // renaming and removing files
-// await Deno.rename('readme.txt', 'deleteme.txt');
-// await Deno.remove('deleteme.txt');
+const server = serve({ port: 3000 });
+console.log('listening for requests on port 3000');
 
-// fetch api
-const res = await fetch('https://swapi.dev/api/films/');
-const data = await res.json();
-
-console.log(data);
+for await (const req of server){
+    const url = req.url;
+    req.respond({ body: `Hello ninjas, you visited ${url}`});
+}
